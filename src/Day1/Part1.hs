@@ -1,31 +1,25 @@
-import System.Environment
-import System.IO
-import Control.Monad
+import Control.Monad ()
+import System.Environment (getArgs)
+import System.IO ()
 
 main :: IO ()
 main = do
-    args <- getArgs
-    result <- do getMaxFood (head args)
-    putStrLn (show result)
+  args <- getArgs
+  result <- do getMaxFood (head args)
+  print result
 
 getMaxFood :: String -> IO Int
 getMaxFood filePath = do
-    content <- readFile filePath
-    let linesOfFiles = lines content
-    return(getMaxSum 0 0 linesOfFiles)
+  content <- readFile filePath
+  let linesOfFiles = lines content
+  return (getMaxSum 0 0 linesOfFiles)
 
 getMaxSum :: Int -> Int -> [String] -> Int
-getMaxSum current max [] = if current > max then current else max
-getMaxSum current max ("":rest) = 
-    let newMax = if current > max then current else max
-    in getMaxSum 0 newMax rest
-    
-getMaxSum current max (currentValue:rest) = 
-    let x = read currentValue :: Int
-        newMax = if current > max then current else max
-    in getMaxSum (current + x) newMax rest
-
-    
-     
-
-    
+getMaxSum current currentMax [] = max current currentMax
+getMaxSum current currentMax ("" : rest) =
+  let newMax = max current currentMax
+   in getMaxSum 0 newMax rest
+getMaxSum current currentMax (currentValue : rest) =
+  let x = read currentValue :: Int
+      newMax = max current currentMax
+   in getMaxSum (current + x) newMax rest
