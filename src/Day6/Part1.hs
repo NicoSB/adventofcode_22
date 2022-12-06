@@ -21,7 +21,7 @@ findMarker [a,b,c,d] _ processed = traceShow [a,b,c,d] processed
 findMarker marker (current:rest) processed =
     let maybeIndex = elemIndex current (traceShow marker marker)
     in case maybeIndex of
-        Just idx -> findMarker (current:(takeWhile (/= current) marker)) rest processed + 1
+        Just idx -> findMarker (current : takeWhile (/= current) marker) rest processed + 1
         Nothing -> findMarker (current:marker) rest processed + 1
 findMarker marker [] processed = -1
 
